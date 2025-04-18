@@ -25,6 +25,10 @@ data class User(
     @JsonIgnore
     val chats: MutableList<Chat> = mutableListOf(),
 
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @JsonIgnore
+    val projects: MutableList<Project> = mutableListOf(),
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     val roles: MutableSet<Role> = mutableSetOf()
 
