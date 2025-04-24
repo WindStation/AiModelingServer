@@ -31,6 +31,6 @@ data class Chat (
     val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @LastModifiedDate
-    val updatedAt: LocalDateTime = LocalDateTime.now()
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 
 )

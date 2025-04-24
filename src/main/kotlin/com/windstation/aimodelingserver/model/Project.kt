@@ -2,10 +2,15 @@ package com.windstation.aimodelingserver.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
+import org.springframework.data.annotation.CreatedDate
+import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "projects")
-data class Project (
+@EntityListeners(AuditingEntityListener::class)
+data class Project(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +18,8 @@ data class Project (
 
     @Column(nullable = false)
     var name: String? = null,
+
+    var description: String? = null,
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -22,5 +29,11 @@ data class Project (
     @OneToMany(mappedBy = "project", cascade = [CascadeType.ALL], orphanRemoval = true)
     @JsonIgnore
     var umls: MutableList<Uml> = mutableListOf(),
+
+    @CreatedDate
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+
+    @LastModifiedDate
+    var updatedAt: LocalDateTime = LocalDateTime.now()
 
 )
