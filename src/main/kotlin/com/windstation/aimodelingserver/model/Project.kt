@@ -1,5 +1,6 @@
 package com.windstation.aimodelingserver.model
 
+import com.fasterxml.jackson.annotation.JsonGetter
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
@@ -36,4 +37,7 @@ data class Project(
     @LastModifiedDate
     var updatedAt: LocalDateTime = LocalDateTime.now()
 
-)
+) {
+    @JsonGetter("umlCount")
+    fun getUmlCount() = umls.size
+}
