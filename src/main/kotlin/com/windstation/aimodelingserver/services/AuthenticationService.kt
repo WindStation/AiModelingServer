@@ -7,6 +7,7 @@ import com.windstation.aimodelingserver.model.User
 import com.windstation.aimodelingserver.repository.RoleRepository
 import com.windstation.aimodelingserver.repository.UserRepository
 import com.windstation.aimodelingserver.util.JwtUtil
+import io.jsonwebtoken.JwtException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.dao.DuplicateKeyException
 import org.springframework.security.authentication.AuthenticationManager
@@ -51,7 +52,11 @@ class AuthenticationService(
         return jwtUtil.generateToken(user.username)
     }
 
-//    fun refresh(refreshToken: String): TokenResponseDto {
-//
-//    }
+    fun refresh(refreshToken: String): TokenResponseDto {
+        if (jwtUtil.isExpired(refreshToken)) {
+            throw JwtException("Token expired")
+        }
+        val username = jwtUtil.extractUsername(refreshToken)
+        return jwtUtil.generateToken(username)
+    }
 }

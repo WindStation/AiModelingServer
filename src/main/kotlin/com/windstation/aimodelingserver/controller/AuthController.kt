@@ -28,9 +28,9 @@ class AuthController(
         return ResponseEntity.ok(authenticationService.register(dto))
     }
 
-//    @PostMapping("/refresh")
-//    fun refresh(@RequestBody refreshToken: String): ResponseEntity<TokenResponseDto> {
-//
-//    }
+    @PostMapping("/refresh")
+    fun refresh(@RequestBody refreshToken: String): ResponseEntity<TokenResponseDto> {
+        return ResponseEntity.ok(authenticationService.refresh(refreshToken))
+    }
 
 }
